@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Pascal triangle."""
 
+
 def pascal_triangle(n):
     """Pascal's triangle of n."""
     if n <= 0:
@@ -15,4 +16,4 @@ def pascal_triangle(n):
                 newRow[ele] = ret[row - 1][ele - 1] + ret[row - 1][ele]
         ret.append(newRow)
 
-    return ret;
+    return ret
