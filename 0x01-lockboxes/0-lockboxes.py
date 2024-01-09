@@ -9,19 +9,21 @@ def canUnlockAll(boxes):
         for key in box:
             keys[key] = 1
 
-    keys = {}
+    keys = {0: 1}
     notOpened = []
     if len(boxes) == 0 or len(boxes) == 1:
         return True
 
-    for i in range(1, len(boxes)):
-        getKeys(boxes[i - 1], keys)
-        if i not in keys:
-            if i not in keys:
-                notOpened.append(i)
+    for i in range(0, len(boxes)):
+        if i in keys:
+            getKeys(boxes[i], keys)
+        else:
+            notOpened.append(i)
 
     for i in notOpened:
-        if i not in keys:
+        if i in keys:
+            getKeys(boxes[i], keys)
+        else:
             return False
 
     return True
