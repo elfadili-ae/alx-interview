@@ -5,6 +5,7 @@ import re
 
 
 def extract_data(log_line):
+    """extract data from the log line."""
     pattern = re.compile(
         r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[([^\]]+)\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$'
     )
