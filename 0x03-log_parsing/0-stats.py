@@ -34,13 +34,11 @@ if __name__ == "__main__":
         500: 0,
     }
 
-    output = []
     total_size = 0
     print_counter = 0
-    last = ""
     try:
-        while True:
-            line = input()
+        for line in sys.stdin:
+            # line = input()
             print_counter += 1
             codo, saizu = extract_data(line)
             if codo is not None and saizu is not None:
@@ -48,16 +46,15 @@ if __name__ == "__main__":
                     codesCount[int(codo)] += 1
                     total_size += saizu
             if print_counter == 10:
-                print_counter = 1
+                print_counter = 0
                 ln = "file size: {}".format(total_size)
                 print(ln)
                 for i in codes:
                     if codesCount[i] != 0:
                         print("{}: {}".format(i, codesCount[i]))
     except KeyboardInterrupt:
-        last = "file size: {}".format(total_size)
+        print("file size: {}".format(total_size))
         for i in codes:
             if codesCount[i] != 0:
-                last += "\n{}: {}".format(i, codesCount[i])
-        print(last)
+                print("{}: {}".format(i, codesCount[i]))
         raise
