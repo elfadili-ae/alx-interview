@@ -3,10 +3,10 @@
 import sys
 
 
-def printer(codes, codesCount, total_size):
+def printer(codesCount, total_size):
     """Print output"""
-    print("file size: {}".format(total_size))
-    for i in codes:
+    print("File size: {}".format(total_size))
+    for i in sorted(codesCount.keys()):
         if codesCount[i] != 0:
             print("{}: {}".format(i, codesCount[i]))
 
@@ -14,7 +14,6 @@ def printer(codes, codesCount, total_size):
 if __name__ == "__main__":
 
     lines = []
-    codes = [200, 301, 400, 401, 403, 404, 405, 500]
     codesCount = {
         200: 0,
         301: 0,
@@ -31,7 +30,7 @@ if __name__ == "__main__":
     try:
         for line in sys.stdin:
             if print_counter != 0 and print_counter % 10 == 0:
-                printer(codes, codesCount, total_size)
+                printer(codesCount, total_size)
 
             vals = line.split()
             print_counter += 1
@@ -46,8 +45,8 @@ if __name__ == "__main__":
                     codesCount[int(vals[-2])] += 1
             except Exception:
                 pass
-        printer(codes, codesCount, total_size)
+        printer(codesCount, total_size)
 
     except KeyboardInterrupt:
-        printer(codes, codesCount, total_size)
+        printer(codesCount, total_size)
         raise
