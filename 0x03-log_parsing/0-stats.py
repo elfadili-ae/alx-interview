@@ -1,23 +1,15 @@
 #!/usr/bin/python3
 """Parse logs"""
 import sys
-import re
 
 
-def extract_data(log_line):
-    """extract data from the log line."""
-    pattern = re.compile(
-        r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[([^\]]+)\] .+ (\d+) (\d+)$'
-    )
-    match = pattern.match(log_line)
+def printer(codes, codesCount, total_size):
+    """Print output"""
+    print("file size: {}".format(total_size))
+    for i in codes:
+        if codesCount[i] != 0:
+            print("{}: {}".format(i, codesCount[i]))
 
-    if match:
-        status_code = int(match.group(3))
-        file_size = int(match.group(4))
-
-        return status_code, file_size
-    else:
-        return None, None
 
 if __name__ == "__main__":
 
@@ -38,23 +30,24 @@ if __name__ == "__main__":
     print_counter = 0
     try:
         for line in sys.stdin:
-            # line = input()
+            if print_counter != 0 and print_counter % 10 == 0:
+                printer(codes, codesCount, total_size)
+
+            vals = line.split()
             print_counter += 1
-            codo, saizu = extract_data(line)
-            if codo is not None and saizu is not None:
-                if codo in codesCount:
-                    codesCount[int(codo)] += 1
-                    total_size += saizu
-            if print_counter == 10:
-                print_counter = 0
-                ln = "file size: {}".format(total_size)
-                print(ln)
-                for i in codes:
-                    if codesCount[i] != 0:
-                        print("{}: {}".format(i, codesCount[i]))
+
+            try:
+                total_size += int(vals[-1])
+            except Exception:
+                pass
+
+            try:
+                if int(vals[-2]) in codesCount:
+                    codesCount[int(vals[-2])] += 1
+            except Exception:
+                pass
+        printer(codes, codesCount, total_size)
+
     except KeyboardInterrupt:
-        print("file size: {}".format(total_size))
-        for i in codes:
-            if codesCount[i] != 0:
-                print("{}: {}".format(i, codesCount[i]))
+        printer(codes, codesCount, total_size)
         raise
