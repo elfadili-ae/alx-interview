@@ -5,17 +5,16 @@ import sys
 
 if len(sys.argv) != 2:
     print("Usage: nqueens N")
-    exit(1)
+    sys.exit(1)
 
-try:
-    n = int(sys.argv[1])
-except TypeError:
+if not sys.argv[1].isdigit():
     print("N must be a number")
-    exit(1)
+    sys.exit(1)
 
+n = int(sys.argv[1])
 if n < 4:
     print("N must be at least 4")
-    exit(1)
+    sys.exit(1)
 
 col = set()
 positiveD = set()
@@ -23,6 +22,7 @@ negativeD = set()
 
 res = []
 board = [[""] * n for _ in range(n)]
+
 
 def backtrack(r, n, res, board, col, positiveD, negativeD):
     """backtrack algorithm to solve N-queens problem"""
@@ -44,6 +44,7 @@ def backtrack(r, n, res, board, col, positiveD, negativeD):
         positiveD.remove(r+c)
         negativeD.remove(r-c)
         board[r][c] = ""
+
 
 backtrack(0, n, res, board, col, positiveD, negativeD)
 for row in res:
