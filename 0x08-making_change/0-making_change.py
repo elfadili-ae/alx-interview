@@ -1,27 +1,23 @@
 #!/usr/bin/python3
 """Making change"""
 
+
 def makeChange(coins, total):
-    """make change"""
-    if total <= 0:
-        return 0
-    
-    coins = sorted(coins)
-    result = 0
-    s = len(coins)
-    for i in range(s - 1, -1, -1):
-        if total % coins[s - 1 - i] != 0:
-            for j in range(i - 1, -1, -1):
-                if total % coins[j] == 0:
-                    i = j - 1
-                    result += 1
-                    return result
-        else:
-            val = total // coins[i]
-            total = total - (coins[i] * val)
-            result += val
+    """making change with the lowset number of coins"""
+    if total < 0:
+        return -1
 
+    coins.sort(reverse=True)
 
-    if total == 0:
-        return result
-    return -1
+    num_coins = 0
+    remaining_total = total
+
+    for coin in coins:
+        while remaining_total >= coin:
+            remaining_total -= coin
+            num_coins += 1
+
+    if remaining_total == 0:
+        return num_coins
+    else:
+        return -1
