@@ -4,8 +4,8 @@
 
 def makeChange(coins, total):
     """making change with the lowset number of coins"""
-    if total < 0:
-        return -1
+    if total <= 0:
+        return 0
 
     coins.sort(reverse=True)
 
